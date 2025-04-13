@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
             'name'=>'Abdurazzoq',
             'surname'=>'Negmatov',
             'login'=>'AlovesZ',
-            'password'=>'9050',
+            'password'=>bcrypt('9050'),
             'phone'=>'+992928369050',
             'role'=>'Разраб',
         ]);
