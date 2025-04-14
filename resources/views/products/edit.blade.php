@@ -61,11 +61,13 @@
                             {{-- data-bs-target="#collapseOne" --}}
                             <h2 class="accordion-header" id="headingOne">
                                 <button style="font-size: 30px; font-weight:bolder; position: relative !important;" class="accordion-button" type="button"
-                                    data-bs-toggle="collapse" aria-expanded="true" aria-controls="collapseOne">
+                                    data-bs-toggle="collapse" aria-expanded="true" aria-controls="collapseOne" id="title">
                                     <h3
                                         onclick="this.parentNode.parentNode.querySelector('#productName').classList.remove('d-none');">
+                                        {{-- <i class="ti ti-edit-circle text-primary"></i> --}}
                                         {{ $product->name }} <i class="ti ti-edit-circle text-primary"></i> </h3>
-                                        <div style="position: absolute; right: 80px;transform: translateY(-40%); top: 50%;">
+                                         {{-- style="position: absolute; right: 80px;transform: translateY(-40%); top: 50%;" --}}
+                                        <div id="total">
                                             <h3>Итого: {{ $totalPrice }} смн</h3>
                                         </div>
                                 </button>
@@ -88,9 +90,9 @@
                                 <div class="accordion-body">
 
                                     <div class="d-flex" style="flex-direction: column">
-                                        <h3 class="d-flex justify-content-between">
+                                        <h3 class="d-flex justify-content-between flex-wrap">
                                                 <div>Сырье</div>
-                                                <div>Итого веса: {{ $totalQuantity['siryo'] }} кг</div>
+                                                <div id="total2">Итого веса: {{ $totalQuantity['siryo'] }} кг</div>
                                         </h3>
                                         <div class="card card-body">
                                             <div class="d-flex w-100">
@@ -143,9 +145,9 @@
                                         @empty
                                             Рецепта нету
                                         @endforelse
-                                        <h3 class="d-flex justify-content-between">
+                                        <h3 class="d-flex justify-content-between flex-wrap">
                                             <div>Специи</div>
-                                            <div>Итого веса: {{ $totalQuantity['specias'] }} кг</div>
+                                            <div id="total2">Итого веса: {{ $totalQuantity['specias'] }} кг</div>
                                         </h3>
                                         <div class="card card-body">
                                             <div class="d-flex w-100">
@@ -384,5 +386,41 @@
             summary.value = e.value * count.value
         }
     </script>
+
+
+    <style>
+
+        @media screen and (max-width: 420px) {
+            #title{
+                /* padding-bottom: 30px !important; */
+                /* font-size: 20px !important; */
+                display: flex;
+                flex-wrap: wrap;
+            }
+            #total {
+                width: 100%;
+                position: static; right: 0;top: 0;
+                transform: translateY(0%);
+            }
+            #total2{
+                width: 100%;
+            }
+        }
+        @media screen and (min-width: 420px) {
+            #title{
+                /* padding-bottom: 30px !important; */
+                /* font-size: 20px !important; */
+                display: unset;
+                flex-wrap: nowrap;
+            }
+            #total{
+                position: absolute;
+                right: 80px;
+                transform: translateY(-40%);
+                top: 50%;
+            }
+        }
+
+    </style>
 
 @endsection
