@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('unit',['кг','шт','литр']);
+            $table->enum('unit',['кг','шт','литр', 'метр']);
             $table->enum('type',['сырье','специя']);
             $table->timestamps();
         });

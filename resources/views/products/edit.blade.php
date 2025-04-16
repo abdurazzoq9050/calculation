@@ -65,7 +65,11 @@
                                     <h3
                                         onclick="this.parentNode.parentNode.querySelector('#productName').classList.remove('d-none');">
                                         {{-- <i class="ti ti-edit-circle text-primary"></i> --}}
-                                        {{ $product->name }} <i class="ti ti-edit-circle text-primary"></i> </h3>
+                                        {{ $product->name }} <i class="ti ti-edit-circle text-primary"></i> 
+                                    </h3>
+                                        <div class="quantity" id="total">
+                                            <h3>Итого: {{ $totalQuantity['specias'] + $totalQuantity['siryo'] }} </h3>
+                                        </div>
                                          {{-- style="position: absolute; right: 80px;transform: translateY(-40%); top: 50%;" --}}
                                         <div id="total">
                                             <h3>Итого: {{ $totalPrice }} смн</h3>
@@ -92,7 +96,7 @@
                                     <div class="d-flex" style="flex-direction: column">
                                         <h3 class="d-flex justify-content-between flex-wrap">
                                                 <div>Сырье</div>
-                                                <div id="total2">Итого веса: {{ $totalQuantity['siryo'] }} кг</div>
+                                                <div id="total2">Итого веса: {{ $totalQuantity['siryo'] }}</div>
                                         </h3>
                                         <div class="card card-body">
                                             <div class="d-flex w-100">
@@ -147,7 +151,7 @@
                                         @endforelse
                                         <h3 class="d-flex justify-content-between flex-wrap">
                                             <div>Специи</div>
-                                            <div id="total2">Итого веса: {{ $totalQuantity['specias'] }} кг</div>
+                                            <div id="total2">Итого веса: {{ $totalQuantity['specias'] }}</div>
                                         </h3>
                                         <div class="card card-body">
                                             <div class="d-flex w-100">
@@ -402,6 +406,11 @@
                 position: static; right: 0;top: 0;
                 transform: translateY(0%);
             }
+            #total.quantity {
+                width: 100%;
+                position: static; right: 0;top: 0;
+                transform: translateY(0%);
+            }
             #total2{
                 width: 100%;
             }
@@ -416,6 +425,12 @@
             #total{
                 position: absolute;
                 right: 80px;
+                transform: translateY(-40%);
+                top: 50%;
+            }
+            #total.quantity {
+                position: absolute;
+                right: 50%;
                 transform: translateY(-40%);
                 top: 50%;
             }

@@ -137,6 +137,7 @@
                                 <option>кг</option>
                                 <option>литр</option>
                                 <option>шт</option>
+                                <option>метр</option>
                             </select>
                         </div>
                     </div>
@@ -189,6 +190,7 @@
                                 <option>кг</option>
                                 <option>литр</option>
                                 <option>шт</option>
+                                <option>метр</option>
                             </select>
                         </div>
                     </div>

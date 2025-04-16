@@ -33,7 +33,7 @@ class IngredientsController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'unit' => 'required|in:кг,шт,литр',
+            'unit' => 'required|in:кг,шт,литр,метр',
         ]);
 
         $ingredient = Ingredients::create($validated);
@@ -67,7 +67,7 @@ class IngredientsController extends Controller
         // Валидируем только те поля, которые передаются в запросе
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
-            'unit' => 'sometimes|in:кг,шт,литр',
+            'unit' => 'sometimes|in:кг,шт,литр,метр',
         ]);
 
         $ingredient->update($validated);
@@ -99,7 +99,7 @@ class IngredientsController extends Controller
     public function storev2(Request $request){
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'unit' => 'required|in:кг,шт,литр',
+            'unit' => 'required|in:кг,шт,литр,метр',
             'type' => 'required|in:специя,сырье',
         ]);
 
@@ -113,7 +113,7 @@ class IngredientsController extends Controller
         $validated = $request->validate([
             'id' => 'required|exists:ingredients,id',
             'name' => 'nullable|string|max:255',
-            'unit' => 'nullable|in:кг,шт,литр',
+            'unit' => 'nullable|in:кг,шт,литр,метр',
             'type' => 'nullable|in:специя,сырье',
         ]);
 
