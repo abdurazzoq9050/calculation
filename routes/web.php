@@ -13,7 +13,7 @@ Route::get('/login', function () {
 })->name('login');
 
 
-Route::post('/login', [UserController::class, 'loginv2'])->name('loginPost');
+Route::post('/login', [UserController::class, 'loginv2'])->name('loginPost')->middleware('throttle:3,1');
 
 
 Route::middleware('auth')->group(function () {
