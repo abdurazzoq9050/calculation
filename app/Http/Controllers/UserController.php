@@ -156,7 +156,7 @@ class UserController extends Controller
 
     public function employees()
     {
-        $users = User::whereNotIn('role', ['Разраб','Администратор'])->get();
+        $users = User::whereNotIn('role', ['Разраб','Администратор'])->orderBy('name','ASC')->get();
         $title = 'Сотрудники';
 
         return view('employees.index', compact('users', 'title'));
@@ -194,7 +194,7 @@ class UserController extends Controller
 
     public function showv2(User $user)
     {
-        return view('employees.show', compact('user'));
+        // return view('employees.show', compact('user'));
     }
 
     public function edit(int $id)

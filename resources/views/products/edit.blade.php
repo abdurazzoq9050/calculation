@@ -109,7 +109,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @forelse ($product->recipes as $r)
+                                        @forelse ($siryo as $r)
                                         @php
                                                 if($r->ingredient->type!='сырье'){
                                                     continue;
@@ -164,7 +164,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @forelse ($product->recipes as $r)
+                                        @forelse ($specias as $r)
                                             @php
                                                 if($r->ingredient->type=='сырье'){
                                                     continue;

@@ -57,7 +57,7 @@ class ProductController extends Controller
     }
 
     public function products(){
-        $products = Product::get();
+        $products = Product::orderBy('name','ASC')->get();
         $title = "Продукты";
         return view('products.index', compact('products', 'title'));
     }
@@ -125,36 +125,46 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Продукт успешно создан');
     }
 
-    public function edit(int $id){
-        $product = Product::with('recipes.ingredient')->find($id);
-        if (!$product) {
-            return redirect()->route('products.index')->withErrors(['message' => 'Продукт не найден']);
-        }
-
-        $totalPrice = $product->recipes->sum(function ($recipe) {
-                $recipe->amount = $recipe->price * $recipe->quantity;
-                return $recipe->price * $recipe->quantity; 
+    public function edit(int $id)
+    {
+        $product = Product::with(['recipes.ingredient'])->findOrFail($id);
+        
+        // Группируем рецепты по типу ингредиента и сразу вычисляем amount
+        $groupedRecipes = $product->recipes->groupBy(function ($recipe) {
+            $recipe->amount = $recipe->price * $recipe->quantity;
+            return $recipe->ingredient->type;
+        })->map(function ($group) {
+            return $group->sortBy(function ($recipe) {
+                return $recipe->ingredient->name;
+            })->values();
         });
         
-        
-        $totalQuantitySpecias = $product->recipes->sum(function ($recipe) {
-            if($recipe->ingredient->type == 'специя') {
-                return $recipe->quantity; 
-            }
-        });
-        $totalQuantitySiryo = $product->recipes->sum(function ($recipe) {
-            if($recipe->ingredient->type != 'специя') {
-                return $recipe->quantity; 
-            }
-        });
-
-        $totalQuantity = [ 
-            'specias' => $totalQuantitySpecias,
-            'siryo' => $totalQuantitySiryo,
+        // Получаем приоритетные группы (сырье и специи)
+        $priorityGroups = [
+            'сырье' => $groupedRecipes->get('сырье', collect()),
+            'специя' => $groupedRecipes->get('специя', collect()),
         ];
-
-        $ingredients = Ingredients::get();
-        $title = 'Редактирование продукта';
-        return view('products.edit', compact('product', 'title', 'ingredients', 'totalPrice','totalQuantity'));
+        
+        // Все остальные группы (кроме сырья и специй)
+        $otherGroups = $groupedRecipes->except(['сырье', 'специя']);
+        
+        // Суммарные значения
+        $totalPrice = $product->recipes->sum('amount');
+        
+        $totalQuantity = [
+            'specias' => $priorityGroups['специя']->sum('quantity'),
+            'siryo' => $priorityGroups['сырье']->sum('quantity'),
+        ];
+        
+        return view('products.edit', [
+            'product' => $product,
+            'specias' => $priorityGroups['специя'],
+            'siryo' => $priorityGroups['сырье'],
+            'otherGroups' => $otherGroups,
+            'title' => 'Редактирование продукта',
+            'ingredients' => Ingredients::all(),
+            'totalPrice' => $totalPrice,
+            'totalQuantity' => $totalQuantity
+        ]);
     }
 }

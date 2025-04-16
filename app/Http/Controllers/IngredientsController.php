@@ -91,7 +91,7 @@ class IngredientsController extends Controller
 
     public function ingredients()
     {
-        $ingredients = Ingredients::all();
+        $ingredients = Ingredients::orderBy('name','ASC')->get();
         $title = 'Ингредиенты';
         return view('ingredients.index', compact('ingredients', 'title'));
     }
