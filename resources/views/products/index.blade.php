@@ -66,13 +66,13 @@
                                         <td>
                                             <a href="{{ route('products.show', $u->id) }}" class="btn btn-info px-2"><i
                                                     class="ti ti-eye-check mx-1"></i></a>
-                                            {{-- <form action="{{ route('employees.destroy', $u->id) }}" method="POST"
+                                            <form action="{{ route('products.destroy', $u->id) }}" method="POST"
                                                 style="display: inline-block;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger px-2"><i
                                                         class="ti ti-trash mx-1"></i></button>
-                                            </form> --}}
+                                            </form>
                                         </td>
                                     </tr>
                                     @php
