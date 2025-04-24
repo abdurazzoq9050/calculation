@@ -10,12 +10,12 @@
                 <div class="col-md-12">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript: void(0)">Главная</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0)">Продукты</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0)">Продукции</a></li>
                     </ul>
                 </div>
                 <div class="col-md-12">
                     <div class="page-header-title mb-3">
-                        <h2 class="mb-0">Продукты</h2>
+                        <h2 class="mb-0">Продукции</h2>
                     </div>
                     @if (session('success') != '')
                         <div class="alert alert-success">
@@ -79,7 +79,7 @@
                                         $i++;
                                     @endphp
                                 @empty
-                                    Продуктов нету!
+                                    Продукций нету!
                                 @endforelse
                             </tbody>
                         </table>

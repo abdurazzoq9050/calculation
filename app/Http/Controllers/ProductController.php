@@ -46,7 +46,7 @@ class ProductController extends Controller
         }
         $product->save();
 
-        return redirect()->route('products.show', $product->id)->with('success', 'Продукт успешно обновлен');
+        return redirect()->route('products.show', $product->id)->with('success', 'Продукция успешно обновлена');
     }
 
     public function destroy(int $id)
@@ -55,7 +55,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return redirect()->route('products.index')->with('success', 'Продукт успешно удален');
+        return redirect()->route('products.index')->with('success', 'Продукция успешно удалена');
 
     }
 
@@ -90,7 +90,7 @@ class ProductController extends Controller
         );
         
         if (!$product) {
-            return redirect()->back()->withErrors(['product' => 'Ошибка при создании продукта']);
+            return redirect()->back()->withErrors(['product' => 'Ошибка при создании продукции']);
         }
 
         foreach($validated['ingredient_id'] as $key => $ingredientId) {
@@ -125,7 +125,7 @@ class ProductController extends Controller
         }
         // $product = Product::create($validated);
 
-        return redirect()->route('products.index')->with('success', 'Продукт успешно создан');
+        return redirect()->route('products.index')->with('success', 'Продукция успешно создана');
     }
 
     public function edit(int $id)
