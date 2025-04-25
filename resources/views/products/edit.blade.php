@@ -53,6 +53,28 @@
                             </ul>
                         </div>
                     @endif
+
+                        {{-- NAME --}}
+
+
+                    <h3
+                        onclick="this.parentNode.parentNode.querySelector('#productName').classList.remove('d-none');">
+                        {{-- <i class="ti ti-edit-circle text-primary"></i> --}}
+                        {{ $product->name }} <i class="ti ti-edit-circle text-primary"></i> 
+                    </h3>
+                    <div class="d-flex align-items-center px-4 pt-3 d-none" id="productName">
+                        <form action="{{ route('products.update') }}" method="POST" class="d-flex w-100">
+                            @csrf
+                            @method('PATCH')
+                            <input type="hidden" name="id" value="{{ $product->id }}">
+                            <input type="text" class="form-control me-1" name="name" style="width: 200px;"
+                                value="{{ $product->name }}">
+                            <button class="btn px-2 rounded-circle"
+                                onclick="this.parentNode.parentNode.querySelector('#productName').classList.remove('d-none');"><i
+                                    class="ti ti-circle-check text-primary"
+                                    style="font-size: 30px"></i></button>
+                        </form>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="accordion" id="accordionExample">
@@ -63,27 +85,27 @@
                                 <button style="font-size: 30px; font-weight:bolder; position: relative !important;" class="accordion-button" type="button"
                                     data-bs-toggle="collapse" aria-expanded="true" aria-controls="collapseOne" id="title">
                                     <h3
-                                        onclick="this.parentNode.parentNode.querySelector('#productName').classList.remove('d-none');">
+                                        onclick="this.parentNode.parentNode.querySelector('#productLosses').classList.remove('d-none');">
                                         {{-- <i class="ti ti-edit-circle text-primary"></i> --}}
-                                        {{ $product->name }} <i class="ti ti-edit-circle text-primary"></i> 
+                                        Итого: {{ $totalQuantity['specias'] + $totalQuantity['siryo'] }} кг
                                     </h3>
                                         <div class="quantity" id="total">
-                                            <h3>Итого: {{ $totalQuantity['specias'] + $totalQuantity['siryo'] }} </h3>
+                                            <h3>Потери: {{ ($totalQuantity['specias'] + $totalQuantity['siryo']) - $losses }} кг ({{ $losses }} кг - {{ $product->losses }}% ) <i class="ti ti-edit-circle text-primary"></i></h3>
                                         </div>
                                          {{-- style="position: absolute; right: 80px;transform: translateY(-40%); top: 50%;" --}}
                                         <div id="total">
                                             <h3>Итого: {{ $totalPrice }} смн</h3>
                                         </div>
                                 </button>
-                                <div class="d-flex align-items-center px-4 pt-3 d-none" id="productName">
+                                <div class="d-flex align-items-center px-4 pt-3 d-none" id="productLosses">
                                     <form action="{{ route('products.update') }}" method="POST" class="d-flex w-100">
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name="id" value="{{ $product->id }}">
-                                        <input type="text" class="form-control me-1" name="name" style="width: 200px;"
-                                            value="{{ $product->name }}">
+                                        <input type="text" class="form-control me-1" name="losses" style="width: 200px;"
+                                            value="{{ $product->losses }}">
                                         <button class="btn px-2 rounded-circle"
-                                            onclick="this.parentNode.parentNode.querySelector('#productName').classList.remove('d-none');"><i
+                                            onclick="this.parentNode.parentNode.querySelector('#productLosses').classList.remove('d-none');"><i
                                                 class="ti ti-circle-check text-primary"
                                                 style="font-size: 30px"></i></button>
                                     </form>
@@ -96,7 +118,7 @@
                                     <div class="d-flex" style="flex-direction: column">
                                         <h3 class="d-flex justify-content-between flex-wrap">
                                                 <div>Сырье</div>
-                                                <div id="total2">Итого веса: {{ $totalQuantity['siryo'] }}</div>
+                                                <div id="total2">Итого веса: {{ $totalQuantity['siryo'] }} кг</div>
                                         </h3>
                                         <div class="card card-body">
                                             <div class="d-flex w-100">
@@ -151,7 +173,7 @@
                                         @endforelse
                                         <h3 class="d-flex justify-content-between flex-wrap">
                                             <div>Специи</div>
-                                            <div id="total2">Итого веса: {{ $totalQuantity['specias'] }}</div>
+                                            <div id="total2">Итого веса: {{ $totalQuantity['specias'] }} кг</div>
                                         </h3>
                                         <div class="card card-body">
                                             <div class="d-flex w-100">
@@ -431,7 +453,7 @@
             #total.quantity {
                 position: absolute;
                 right: 50%;
-                transform: translateY(-40%);
+                transform: translateY(-40%) translate(35%);
                 top: 50%;
             }
         }

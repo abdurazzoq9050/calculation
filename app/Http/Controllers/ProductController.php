@@ -38,11 +38,15 @@ class ProductController extends Controller
         $validated = $request->validate([
             'id' => 'required|exists:products,id',
             'name' => 'nullable|string|max:255',
+            'losses' => 'nullable|integer|min:0|max:100',
         ]);
         
         $product = Product::findOrFail($validated['id']);
         if($request->name != null && $request->name != $product->name) {
             $product->name = $request->name;
+        }
+        if($request->losses != null && $request->losses != $product->losses) {
+            $product->losses = $request->losses;
         }
         $product->save();
 
@@ -61,13 +65,13 @@ class ProductController extends Controller
 
     public function products(){
         $products = Product::orderBy('name','ASC')->get();
-        $title = "Продукты";
+        $title = "Продукции";
         return view('products.index', compact('products', 'title'));
     }
 
     public function create(){
         $ingredients = Ingredients::get();
-        $title = 'Создание продуктов';
+        $title = 'Создание продукции';
         return view('products.create', compact('title', 'ingredients'));
     }
 
@@ -77,15 +81,16 @@ class ProductController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'losses' => 'required|integer|min:0|max:100',
             'ingredient_id.*' => 'required|exists:ingredients,id',
             'quantity.*' => 'required|numeric|min:0',
             'price.*' => 'required|numeric|min:0',
         ]);
-        // dd($validated);
 
         $product = Product::create(
             [
                 'name' => $validated['name'],
+                'losses' => $validated['losses'],
             ]
         );
         
@@ -153,18 +158,26 @@ class ProductController extends Controller
         
         // Суммарные значения
         $totalPrice = $product->recipes->sum('amount');
-        
+
         $totalQuantity = [
-            'specias' => $priorityGroups['специя']->sum('quantity'),
-            'siryo' => $priorityGroups['сырье']->sum('quantity'),
-        ];
+            'specias' => $priorityGroups['специя']->filter(function ($recipe) {
+                return in_array($recipe->ingredient->unit, ['кг', 'литр']);
+            })->sum('quantity'),
         
+            'siryo' => $priorityGroups['сырье']->filter(function ($recipe) {
+                return in_array($recipe->ingredient->unit, ['кг', 'литр']);
+            })->sum('quantity'),
+        ];
+          
+        $losses =  ($product->losses * ($totalQuantity['specias'] + $totalQuantity['siryo'])) / 100;
+
         return view('products.edit', [
             'product' => $product,
+            'losses' => $losses,
             'specias' => $priorityGroups['специя'],
             'siryo' => $priorityGroups['сырье'],
             'otherGroups' => $otherGroups,
-            'title' => 'Редактирование продукта',
+            'title' => 'Редактирование продукции',
             'ingredients' => Ingredients::all(),
             'totalPrice' => $totalPrice,
             'totalQuantity' => $totalQuantity

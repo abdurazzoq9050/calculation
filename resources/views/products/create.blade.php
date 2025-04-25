@@ -43,10 +43,16 @@
                     <form action="{{ route('products.store') }}" method="POST">
                         @csrf
                         <div class="row align-items-center">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="form-label">Имя</label>
-                                    <input type="text" class="form-control" name="name" placeholder="Введите имя">
+                            <div class="col-md-6">
+                                <div class="w-100 d-flex justify-content-between">
+                                    <div class="form-group w-50 px-2">
+                                        <label class="form-label">Имя</label>
+                                        <input type="text" class="form-control" name="name" placeholder="Введите имя">
+                                    </div>
+                                    <div class="form-group w-50 px-2">
+                                        <label class="form-label">Потери</label>
+                                        <input type="number" class="form-control" name="losses" value="0" placeholder="Введите потери">
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary mb-4 w-auto float-end">Сохранить</button>
                             </div>

@@ -28,7 +28,7 @@
                 <li class="pc-item {{ request()->routeIs(route('products.index')) ? 'active' : '' }}">
                     <a href="{{ route('products.index') }}" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-color-swatch"></i></span>
-                        <span class="pc-mtext">Продукты</span>
+                        <span class="pc-mtext">Продукции</span>
                     </a>
                 </li>
 
