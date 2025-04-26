@@ -85,14 +85,14 @@
                                 <button style="font-size: 30px; font-weight:bolder; position: relative !important;" class="accordion-button" type="button"
                                     data-bs-toggle="collapse" aria-expanded="true" aria-controls="collapseOne" id="title">
                                     <h3>
-                                        Итого: {{ $totalQuantity['specias'] + $totalQuantity['siryo'] }} кг
+                                        Итого: {{ number_format($totalQuantity['specias'] + $totalQuantity['siryo'], 2) }} кг
                                     </h3>
                                         <div class="quantity" id="total">
-                                            <h3 onclick="this.parentNode.parentNode.parentNode.querySelector('#productLosses').classList.remove('d-none');">Потери: {{ ($totalQuantity['specias'] + $totalQuantity['siryo']) - $losses }} кг ({{ $losses }} кг - {{ $product->losses }}% ) <i class="ti ti-edit-circle text-primary"></i></h3>
+                                            <h3 onclick="this.parentNode.parentNode.parentNode.querySelector('#productLosses').classList.remove('d-none');">Потери: {{ number_format((($totalQuantity['specias'] + $totalQuantity['siryo']) - $losses), 2) }} кг ({{ number_format($losses, 2) }} кг - {{ number_format($product->losses, 1) }}% ) <i class="ti ti-edit-circle text-primary"></i></h3>
                                         </div>
                                          {{-- style="position: absolute; right: 80px;transform: translateY(-40%); top: 50%;" --}}
                                         <div id="total">
-                                            <h3>Итого: {{ $totalPrice }} смн</h3>
+                                            <h3>Итого: {{  number_format($totalPrice, 2) }} смн</h3>
                                         </div>
                                 </button>
                                 <div class="d-flex align-items-center px-4 pt-3 d-none" id="productLosses" >
@@ -118,7 +118,7 @@
                                     <div class="d-flex" style="flex-direction: column">
                                         <h3 class="d-flex justify-content-between flex-wrap">
                                                 <div>Сырье</div>
-                                                <div id="total2">Итого веса: {{ $totalQuantity['siryo'] }} кг</div>
+                                                <div id="total2">Итого веса: {{  number_format($totalQuantity['siryo'], 2) }} кг</div>
                                         </h3>
                                         <div class="card card-body">
                                             <div class="d-flex w-100">
@@ -173,7 +173,7 @@
                                         @endforelse
                                         <h3 class="d-flex justify-content-between flex-wrap">
                                             <div>Специи</div>
-                                            <div id="total2">Итого веса: {{ $totalQuantity['specias'] }} кг</div>
+                                            <div id="total2">Итого веса: {{ number_format($totalQuantity['specias'], 2) }} кг</div>
                                         </h3>
                                         <div class="card card-body">
                                             <div class="d-flex w-100">

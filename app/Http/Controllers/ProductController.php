@@ -38,7 +38,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'id' => 'required|exists:products,id',
             'name' => 'nullable|string|max:255',
-            'losses' => 'nullable|integer|min:0|max:100',
+            'losses' => 'nullable|numeric|min:0|max:100',
         ]);
         
         $product = Product::findOrFail($validated['id']);
@@ -81,7 +81,7 @@ class ProductController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'losses' => 'required|integer|min:0|max:100',
+            'losses' => 'required|numeric|min:0|max:100',
             'ingredient_id.*' => 'required|exists:ingredients,id',
             'quantity.*' => 'required|numeric|min:0',
             'price.*' => 'required|numeric|min:0',
