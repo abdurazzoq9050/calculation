@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use App\Http\Controllers\IngredientsController;
 use App\Http\Controllers\ProductController;
