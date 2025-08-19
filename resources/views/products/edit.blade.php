@@ -1,4 +1,4 @@
-@extends('index')
+﻿@extends('index')
 
 @section('title', $title)
 
@@ -88,7 +88,7 @@
                                         Итого: {{ number_format($totalQuantity['specias'] + $totalQuantity['siryo'], 2) }} кг
                                     </h3>
                                         <div class="quantity" id="total">
-                                            <h3 onclick="this.parentNode.parentNode.parentNode.querySelector('#productLosses').classList.remove('d-none');">Потери: {{ number_format((($totalQuantity['specias'] + $totalQuantity['siryo']) - $losses), 2) }} кг ({{ number_format($losses, 2) }} кг - {{ number_format($product->losses, 1) }}% ) <i class="ti ti-edit-circle text-primary"></i></h3>
+                                            <h3 onclick="this.parentNode.parentNode.parentNode.querySelector('#productLosses').classList.remove('d-none');">Потеря: {{ number_format((($totalQuantity['specias'] + $totalQuantity['siryo']) - $losses), 2) }} кг ({{ number_format($losses, 2) }} кг - {{ number_format($product->losses, 1) }}% ) <i class="ti ti-edit-circle text-primary"></i></h3>
                                         </div>
                                          {{-- style="position: absolute; right: 80px;transform: translateY(-40%); top: 50%;" --}}
                                         <div id="total">
@@ -101,7 +101,7 @@
                                         @method('PATCH')
                                         
                                         <input type="hidden" name="id" value="{{ $product->id }}">
-                                        <p class="fs-5 w-100">Потери:</p>
+                                        <p class="fs-5 w-100">Потеря:</p>
                                         <input type="text" class="form-control me-1" name="losses" style="width: 200px;"
                                             value="{{ $product->losses }}">
                                         <button class="btn px-2 rounded-circle"

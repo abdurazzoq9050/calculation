@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace Database\Seeders;
 
@@ -13,14 +13,15 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-         User::insert([
+         User::insert(
+	[
             'name'=>'Abdurazzoq',
             'surname'=>'Negmatov',
             'login'=>'AlovesZ',
             'password'=>bcrypt('9050'),
-            'phone'=>'+992928369050',
+            'phone'=>'+992928369050', 
             'role'=>'Разраб',
-        ]);
+        ],);
         
     }
 }
