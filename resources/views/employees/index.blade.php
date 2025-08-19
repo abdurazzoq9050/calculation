@@ -54,7 +54,7 @@
                           <th>Имя</th>
                           <th>Фамилия</th>
                           <th>Логин</th>
-                          <th>Пароль</th>
+                          {{-- <th>Пароль</th> --}}
                           <th>Номер телефона</th>
                           <th>Действия</th>
                         </tr>
@@ -69,7 +69,7 @@
                                 <td>{{ $u->name }}</td>
                                 <td>{{ $u->surname }}</td>
                                 <td>{{ $u->login }}</td>
-                                <td>{{ $u->password }}</td>
+                                {{-- <td>{{ $u->password }}</td> --}}
                                 <td>{{ $u->phone }}</td>
                                 <td>
                                     <a href="{{ route('employees.edit', $u->id) }}" class="btn btn-info px-2"><i class="ti ti-edit-circle mx-1"></i></a>

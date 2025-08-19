@@ -65,11 +65,6 @@
           <p class="m-0"
             >Admin &#9829; crafted by <a href="https://tajsoft.tj" target="_blank">Tajsoft</a></p>
         </div>
-        <div class="col-auto my-1">
-          <ul class="list-inline footer-link mb-0">
-            <li class="list-inline-item"><a href="../index.html">Home</a></li>
-          </ul>
-        </div>
       </div>
     </div>
   </footer>

@@ -22,6 +22,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('dashboard.index');
     })->name('dashboard');
+
+    Route::get('/edit-me', [UserController::class, 'editMe'])->name('me.edit');
+    // Route::patch('edit-me', [UserController::class, 'editme'])->name('employees.update');
+
     
     // Route::get('/employee', [UserController::class, 'employees'])->name('employees.index');
     

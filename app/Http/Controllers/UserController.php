@@ -208,6 +208,18 @@ class UserController extends Controller
         return view('employees.edit', compact('user', 'title'));
     }
 
+    public function editMe()
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('employees.index')->withErrors(['message' => 'Сотрудник не найден']);
+        }
+
+        $title = 'Редактирование профиля';
+        return view('employees.editMe', compact('user', 'title'));
+    }
+
     public function updatev2(Request $request, int $id)
     {
         $user = User::find($id);

@@ -128,14 +128,14 @@
                         <div class="tab-content" id="mysrpTabContent">
                             <div class="tab-pane fade show active" id="drp-tab-1" role="tabpanel"
                                 aria-labelledby="drp-t1" tabindex="0">
-                                <a href="#!" class="dropdown-item">
+                                <a href="{{ route('me.edit') }}" class="dropdown-item">
                                     <i class="ti ti-edit-circle"></i>
                                     <span>Изменить профиль</span>
                                 </a>
-                                <a href="#!" class="dropdown-item">
+                                {{-- <a href="#!" class="dropdown-item">
                                     <i class="ti ti-user"></i>
                                     <span>Показать Profile</span>
-                                </a>
+                                </a> --}}
                             </div>
                             <div class="tab-pane fade" id="drp-tab-2" role="tabpanel" aria-labelledby="drp-t2"
                                 tabindex="0">
