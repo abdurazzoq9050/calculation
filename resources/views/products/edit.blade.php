@@ -54,13 +54,12 @@
                         </div>
                     @endif
 
-                        {{-- NAME --}}
+                    {{-- NAME --}}
 
 
-                    <h3
-                        onclick="this.parentNode.parentNode.querySelector('#productName').classList.remove('d-none');">
+                    <h3 onclick="this.parentNode.parentNode.querySelector('#productName').classList.remove('d-none');">
                         {{-- <i class="ti ti-edit-circle text-primary"></i> --}}
-                        {{ $product->name }} <i class="ti ti-edit-circle text-primary"></i> 
+                        {{ $product->name }} <i class="ti ti-edit-circle text-primary"></i>
                     </h3>
                     <div class="d-flex align-items-center px-4 pt-3 d-none" id="productName">
                         <form action="{{ route('products.update') }}" method="POST" class="d-flex w-100">
@@ -71,8 +70,7 @@
                                 value="{{ $product->name }}">
                             <button class="btn px-2 rounded-circle"
                                 onclick="this.parentNode.parentNode.querySelector('#productName').classList.remove('d-none');"><i
-                                    class="ti ti-circle-check text-primary"
-                                    style="font-size: 30px"></i></button>
+                                    class="ti ti-circle-check text-primary" style="font-size: 30px"></i></button>
                         </form>
                     </div>
                 </div>
@@ -82,24 +80,33 @@
                         <div class="accordion-item">
                             {{-- data-bs-target="#collapseOne" --}}
                             <h2 class="accordion-header" id="headingOne">
-                                <button style="font-size: 30px; font-weight:bolder; position: relative !important;" class="accordion-button" type="button"
-                                    data-bs-toggle="collapse" aria-expanded="true" aria-controls="collapseOne" id="title">
+                                <button style="font-size: 30px; font-weight:bolder; position: relative !important;"
+                                    class="accordion-button" type="button" data-bs-toggle="collapse" aria-expanded="true"
+                                    aria-controls="collapseOne" id="title">
                                     <h3>
-                                        Итого: {{ number_format($totalQuantity['specias'] + $totalQuantity['siryo'], 2) }} кг
+                                        Итого: {{ number_format($totalQuantity['specias'] + $totalQuantity['siryo'], 2) }}
+                                        кг
                                     </h3>
-                                        <div class="quantity" id="total">
-                                            <h3 onclick="this.parentNode.parentNode.parentNode.querySelector('#productLosses').classList.remove('d-none');">Потеря: {{ number_format((($totalQuantity['specias'] + $totalQuantity['siryo']) - $losses), 2) }} кг ({{ number_format($losses, 2) }} кг - {{ number_format($product->losses, 1) }}% ) <i class="ti ti-edit-circle text-primary"></i></h3>
-                                        </div>
-                                         {{-- style="position: absolute; right: 80px;transform: translateY(-40%); top: 50%;" --}}
-                                        <div id="total">
-                                            <h3>Итого: {{  number_format($totalPrice, 2) }} смн</h3>
-                                        </div>
+                                    <div class="quantity" id="total">
+                                        <h3
+                                            onclick="this.parentNode.parentNode.parentNode.querySelector('#productLosses').classList.remove('d-none');">
+                                            Потеря:
+                                            {{ number_format($totalQuantity['specias'] + $totalQuantity['siryo'] - $losses, 2) }}
+                                            кг ({{ number_format($losses, 2) }} кг -
+                                            {{ number_format($product->losses, 1) }}% ) <i
+                                                class="ti ti-edit-circle text-primary"></i></h3>
+                                    </div>
+                                    {{-- style="position: absolute; right: 80px;transform: translateY(-40%); top: 50%;" --}}
+                                    <div id="total">
+                                        <h3>Итого: {{ number_format($totalPrice, 2) }} смн</h3>
+                                    </div>
                                 </button>
-                                <div class="d-flex align-items-center px-4 pt-3 d-none" id="productLosses" >
-                                    <form action="{{ route('products.update') }}" method="POST" class="d-flex w-100" style="flex-wrap: wrap;">
+                                <div class="d-flex align-items-center px-4 pt-3 d-none" id="productLosses">
+                                    <form action="{{ route('products.update') }}" method="POST" class="d-flex w-100"
+                                        style="flex-wrap: wrap;">
                                         @csrf
                                         @method('PATCH')
-                                        
+
                                         <input type="hidden" name="id" value="{{ $product->id }}">
                                         <p class="fs-5 w-100">Потеря:</p>
                                         <input type="text" class="form-control me-1" name="losses" style="width: 200px;"
@@ -117,8 +124,9 @@
 
                                     <div class="d-flex" style="flex-direction: column">
                                         <h3 class="d-flex justify-content-between flex-wrap">
-                                                <div>Сырье</div>
-                                                <div id="total2">Итого веса: {{  number_format($totalQuantity['siryo'], 2) }} кг</div>
+                                            <div>Скрытое</div>
+                                            <div id="total2">Итого веса:
+                                                {{ number_format($totalQuantity['secret'], 2) }} кг</div>
                                         </h3>
                                         <div class="card card-body">
                                             <div class="d-flex w-100">
@@ -131,16 +139,18 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @forelse ($siryo as $r)
-                                        @php
-                                                if($r->ingredient->type!='сырье'){
+
+                                        @forelse ($secret as $r)
+                                            @php
+                                                if ($r->ingredient->type == 'сырье' || $r->ingredient->type == 'специи') {
                                                     continue;
                                                 }
                                             @endphp
                                             <div class="card card-body">
                                                 <div class="d-flex w-100">
                                                     <p class="m-0 col-3">{{ $r->ingredient->name }}</p>
-                                                    <p class="m-0 col-2">{{ $r->quantity }} {{ $r->ingredient->unit }}</p>
+                                                    <p class="m-0 col-2">{{ $r->quantity }} {{ $r->ingredient->unit }}
+                                                    </p>
                                                     <p class="m-0 col-3">{{ $r->price }} смн</p>
                                                     <p class="m-0 col-3">{{ $r->amount }} смн</p>
                                                     <div class="m-0 col-1">
@@ -158,8 +168,65 @@
                                                             ">
                                                             <i class="ti ti-edit"></i>
                                                         </button>
-                                                        <form action="{{ route('recipe.destroy', $r->id) }}" method="POST"
-                                                            class="d-inline-block">
+                                                        <form action="{{ route('recipe.destroy', $r->id) }}"
+                                                            method="POST" class="d-inline-block">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger"><i
+                                                                    class="ti ti-trash"></i></button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @empty
+                                            Рецепта нету
+                                        @endforelse
+                                        <h3 class="d-flex justify-content-between flex-wrap">
+                                            <div>Сырье</div>
+                                            <div id="total2">Итого веса: {{ number_format($totalQuantity['siryo'], 2) }}
+                                                кг</div>
+                                        </h3>
+                                        <div class="card card-body">
+                                            <div class="d-flex w-100">
+                                                <p class="m-0 col-3 fw-bold">Ингредиент</p>
+                                                <p class="m-0 col-2 fw-bold">Кол-во</p>
+                                                <p class="m-0 col-3 fw-bold">Цена</p>
+                                                <p class="m-0 col-3 fw-bold">Сумма</p>
+                                                <div class="m-0 col-1 fw-bold">
+                                                    Действия
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @forelse ($siryo as $r)
+                                            @php
+                                                if ($r->ingredient->type != 'сырье') {
+                                                    continue;
+                                                }
+                                            @endphp
+                                            <div class="card card-body">
+                                                <div class="d-flex w-100">
+                                                    <p class="m-0 col-3">{{ $r->ingredient->name }}</p>
+                                                    <p class="m-0 col-2">{{ $r->quantity }} {{ $r->ingredient->unit }}
+                                                    </p>
+                                                    <p class="m-0 col-3">{{ $r->price }} смн</p>
+                                                    <p class="m-0 col-3">{{ $r->amount }} смн</p>
+                                                    <div class="m-0 col-1">
+                                                        <button class="btn btn-primary" type="button"
+                                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                                            aria-controls="offcanvasRight"
+                                                            onclick="
+                                                            document.querySelector('#editRecipe #product_id').value = {{ $product->id }};
+                                                            document.querySelector('#editRecipe #ingredient_id').value = {{ $r->ingredient->id }};
+                                                            document.querySelector('#editRecipe #unit').value = '{{ $r->ingredient->unit }}';
+                                                            document.querySelector('#editRecipe #count').value = {{ $r->quantity }};
+                                                            document.querySelector('#editRecipe #price').value = {{ $r->price }};
+                                                            document.querySelector('#editRecipe #summary').value = {{ $r->amount }};
+                                                            document.querySelector('#editRecipe').setAttribute('action', '{{ route('recipe.update', $r->id) }}');
+                                                            ">
+                                                            <i class="ti ti-edit"></i>
+                                                        </button>
+                                                        <form action="{{ route('recipe.destroy', $r->id) }}"
+                                                            method="POST" class="d-inline-block">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger"><i
@@ -173,7 +240,8 @@
                                         @endforelse
                                         <h3 class="d-flex justify-content-between flex-wrap">
                                             <div>Специи</div>
-                                            <div id="total2">Итого веса: {{ number_format($totalQuantity['specias'], 2) }} кг</div>
+                                            <div id="total2">Итого веса:
+                                                {{ number_format($totalQuantity['specias'], 2) }} кг</div>
                                         </h3>
                                         <div class="card card-body">
                                             <div class="d-flex w-100">
@@ -188,14 +256,15 @@
                                         </div>
                                         @forelse ($specias as $r)
                                             @php
-                                                if($r->ingredient->type=='сырье'){
+                                                if ($r->ingredient->type == 'сырье') {
                                                     continue;
                                                 }
                                             @endphp
                                             <div class="card card-body">
                                                 <div class="d-flex w-100">
                                                     <p class="m-0 col-3">{{ $r->ingredient->name }}</p>
-                                                    <p class="m-0 col-2">{{ $r->quantity }} {{ $r->ingredient->unit }}</p>
+                                                    <p class="m-0 col-2">{{ $r->quantity }} {{ $r->ingredient->unit }}
+                                                    </p>
                                                     <p class="m-0 col-3">{{ $r->price }} смн</p>
                                                     <p class="m-0 col-3">{{ $r->amount }} смн</p>
                                                     <div class="m-0 col-1">
@@ -213,8 +282,8 @@
                                                             ">
                                                             <i class="ti ti-edit"></i>
                                                         </button>
-                                                        <form action="{{ route('recipe.destroy', $r->id) }}" method="POST"
-                                                            class="d-inline-block">
+                                                        <form action="{{ route('recipe.destroy', $r->id) }}"
+                                                            method="POST" class="d-inline-block">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger"><i
@@ -231,7 +300,7 @@
                                         data-bs-toggle="offcanvas" data-bs-target="#addRecipe" aria-controls="addRecipe">
                                         <i class="ti ti-circle-plus" style="font-size: 30px"></i>
                                     </button>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -415,41 +484,50 @@
 
 
     <style>
-
         @media screen and (max-width: 420px) {
-            #title{
+            #title {
                 /* padding-bottom: 30px !important; */
                 /* font-size: 20px !important; */
                 display: flex;
                 flex-wrap: wrap;
             }
+
             #total {
                 width: 100%;
-                position: static; right: 0;top: 0;
+                position: static;
+                right: 0;
+                top: 0;
                 transform: translateY(0%);
             }
+
             #total.quantity {
                 width: 100%;
-                position: static; right: 0;top: 0;
+                position: static;
+                right: 0;
+                top: 0;
                 transform: translateY(0%);
             }
-            #total2{
+
+            #total2 {
                 width: 100%;
             }
         }
+
         @media screen and (min-width: 420px) {
-            #title{
+            #title {
                 /* padding-bottom: 30px !important; */
                 /* font-size: 20px !important; */
                 display: unset;
                 flex-wrap: nowrap;
             }
-            #total{
+
+            #total {
                 position: absolute;
                 right: 80px;
                 transform: translateY(-40%);
                 top: 50%;
             }
+
             #total.quantity {
                 position: absolute;
                 right: 50%;
@@ -457,7 +535,6 @@
                 top: 50%;
             }
         }
-
     </style>
 
 @endsection

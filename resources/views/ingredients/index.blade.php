@@ -151,6 +151,7 @@
                                 <option selected disabled>Выбрать вид</option>
                                 <option>сырье</option>
                                 <option>специя</option>
+                                <option>cкрытое</option>
                             </select>
                         </div>
                     </div>
@@ -204,6 +205,7 @@
                                 <option selected disabled>Выбрать вид</option>
                                 <option>сырье</option>
                                 <option>специя</option>
+                                <option>cкрытое</option>
                             </select>
                         </div>
                     </div>

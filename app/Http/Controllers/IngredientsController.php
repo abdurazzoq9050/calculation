@@ -100,7 +100,7 @@ class IngredientsController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'unit' => 'required|in:кг,шт,литр,метр',
-            'type' => 'required|in:специя,сырье',
+            'type' => 'required|in:специя,сырье,cкрытое',
         ]);
 
         $ingredient = Ingredients::create($validated);
@@ -114,7 +114,7 @@ class IngredientsController extends Controller
             'id' => 'required|exists:ingredients,id',
             'name' => 'nullable|string|max:255',
             'unit' => 'nullable|in:кг,шт,литр,метр',
-            'type' => 'nullable|in:специя,сырье',
+            'type' => 'nullable|in:специя,сырье,cкрытое',
         ]);
 
         $ingredient = Ingredients::find($validated['id']);

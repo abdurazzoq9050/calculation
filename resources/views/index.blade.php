@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- [Head] start -->
-
 <head>
   <title>@yield('title')</title>
   <!-- [Meta] -->
@@ -85,11 +84,7 @@
   
   <script>layout_change('light');</script>
   
-  
-  
-  
   <script>change_box_container('false');</script>
-  
   
   
   <script>layout_rtl_change('false');</script>

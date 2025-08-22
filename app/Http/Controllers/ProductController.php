@@ -151,10 +151,11 @@ class ProductController extends Controller
         $priorityGroups = [
             'сырье' => $groupedRecipes->get('сырье', collect()),
             'специя' => $groupedRecipes->get('специя', collect()),
+            'скрытое' => $groupedRecipes->get('скрытое', collect()),
         ];
         
         // Все остальные группы (кроме сырья и специй)
-        $otherGroups = $groupedRecipes->except(['сырье', 'специя']);
+        $otherGroups = $groupedRecipes->except(['сырье', 'специя', 'скрытое']);
         
         // Суммарные значения
         $totalPrice = $product->recipes->sum('amount');
@@ -167,6 +168,10 @@ class ProductController extends Controller
             'siryo' => $priorityGroups['сырье']->filter(function ($recipe) {
                 return in_array($recipe->ingredient->unit, ['кг', 'литр']);
             })->sum('quantity'),
+
+            'secret' => $priorityGroups['скрытое']->filter(function ($recipe) {
+                return in_array($recipe->ingredient->unit, ['кг', 'литр']);
+            })->sum('quantity'),
         ];
           
         $losses =  ($product->losses * ($totalQuantity['specias'] + $totalQuantity['siryo'])) / 100;
@@ -176,6 +181,7 @@ class ProductController extends Controller
             'losses' => $losses,
             'specias' => $priorityGroups['специя'],
             'siryo' => $priorityGroups['сырье'],
+            'secret' => $priorityGroups['скрытое'],
             'otherGroups' => $otherGroups,
             'title' => 'Редактирование продукции',
             'ingredients' => Ingredients::all(),
